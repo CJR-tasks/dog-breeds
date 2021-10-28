@@ -1,4 +1,4 @@
-package com.curtjrees.dogbreeds
+package com.curtjrees.dogbreeds.features.breed_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,6 +28,11 @@ class DogBreedListFragment : Fragment() {
 
     private val viewModel: DogBreedListViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.loadData()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         ComposeView(requireContext()).apply {
             setContent {
@@ -45,14 +50,14 @@ private fun DogBreedScreen(viewModel: DogBreedListViewModel) {
     }.collectAsState(viewModel.viewState.value)
 
     LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = PaddingValues(16.dp)) {
-        items(viewState.value.dogBreeds) {
+        items(viewState.value.dogBreeds) { dogBreedItem ->
             DogBreedLayout(
-                item = it,
+                item = dogBreedItem,
                 onClick = {
-                    //TODO
+                    viewModel.onBreedClicked(dogBreedItem)
                 },
-                onSubBreedClick = {
-                    //TODO
+                onSubBreedClick = { subBreedItem ->
+                    viewModel.onSubBreedClicked(subBreedItem)
                 }
             )
         }

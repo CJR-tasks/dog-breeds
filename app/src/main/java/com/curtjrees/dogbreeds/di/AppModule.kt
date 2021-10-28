@@ -1,5 +1,6 @@
 package com.curtjrees.dogbreeds.di
 
+import com.curtjrees.dogbreeds.Navigator
 import com.curtjrees.dogbreeds.data.CoroutineDispatchers
 import com.curtjrees.dogbreeds.data.api.ApiDogBreedMapper
 import com.curtjrees.dogbreeds.data.api.DogBreedsRepository
@@ -55,6 +56,8 @@ object AppModule {
         mapper = ApiDogBreedMapper
     )
 
-
+    @Singleton
+    @Provides
+    fun provideNavigator(coroutineDispatchers: CoroutineDispatchers): Navigator = Navigator(coroutineDispatchers)
 
 }
