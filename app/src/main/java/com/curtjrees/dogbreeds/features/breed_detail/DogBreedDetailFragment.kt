@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.LocaleList
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +18,7 @@ import com.curtjrees.dogbreeds.entities.DogBreedItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 
 @AndroidEntryPoint
 class DogBreedDetailFragment : Fragment() {
@@ -52,7 +55,7 @@ class DogBreedDetailFragment : Fragment() {
     }
 
     private fun render(viewState: DogBreedDetailViewModel.ViewState) {
-        binding.name.text = viewState.dogBreed?.name
+        binding.name.text = viewState.dogBreed?.name?.capitalize()
         binding.heroImage.load(viewState.dogBreed?.images?.firstOrNull())
     }
 

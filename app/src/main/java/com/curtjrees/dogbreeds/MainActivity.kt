@@ -1,6 +1,7 @@
 package com.curtjrees.dogbreeds
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -23,14 +24,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         observeNavigationEvents()
+        observeBackstackChanged()
 
         if (savedInstanceState == null) viewModel.initialNavigation()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 
     private fun observeNavigationEvents() {
         viewModel.navigationEventFlow.flowWithLifecycle(lifecycle)
             .onEach(::handleNavigationEvent)
             .launchIn(lifecycleScope)
+    }
+
+    private fun observeBackstackChanged() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            val backStackEmpty = supportFragmentManager.backStackEntryCount == 0
+            supportActionBar?.setDisplayHomeAsUpEnabled(!backStackEmpty)
+        }
     }
 
     private fun handleNavigationEvent(event: NavigationEvent) {
