@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.curtjrees.dogbreeds.features.breed_detail.DogBreedDetailFragment
 import com.curtjrees.dogbreeds.features.breed_list.DogBreedListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         observeNavigationEvents()
 
-        if(savedInstanceState == null) viewModel.initialNavigation()
+        if (savedInstanceState == null) viewModel.initialNavigation()
     }
 
     private fun observeNavigationEvents() {
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleNavigationEvent(event: NavigationEvent) {
         when (event) {
             is BreedListEvent -> switchFragment(DogBreedListFragment(), addToBackStack = false)
-            is BreedDetailEvent -> TODO()
+            is BreedDetailEvent -> switchFragment(DogBreedDetailFragment.newInstance(event.breed))
             is SubBreedDetailEvent -> TODO()
         }
     }

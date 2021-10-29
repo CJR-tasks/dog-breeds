@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id "kotlin-kapt"
+    id "kotlin-parcelize"
     id "dagger.hilt.android.plugin"
 }
 
@@ -37,6 +38,7 @@ android {
 
     buildFeatures {
         compose true
+        viewBinding true
     }
 
     composeOptions {
@@ -64,6 +66,9 @@ dependencies {
     //DI
     implementation "com.google.dagger:hilt-android:$dagger_version"
     kapt "com.google.dagger:hilt-compiler:$dagger_version"
+
+    //Image Loading
+    implementation "io.coil-kt:coil:$coil_version"
 
     //Testing
     testImplementation "junit:junit:$junit_version"

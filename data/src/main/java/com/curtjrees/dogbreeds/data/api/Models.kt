@@ -8,6 +8,11 @@ data class ApiDogBreedsResponse(
     val message: Map<String, List<String>>
 )
 
+data class ApiDogBreedImagesResponse(
+    val status: String,
+    val message: List<String>
+)
+
 data class ApiDogBreed(
     override val name: String,
     override val subBreeds: List<ApiSubBreed>

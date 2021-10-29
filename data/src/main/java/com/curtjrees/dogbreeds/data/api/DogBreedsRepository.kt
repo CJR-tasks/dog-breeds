@@ -14,7 +14,17 @@ class DogBreedsRepository(
     override suspend fun getDogBreeds(): List<DogBreed> = withContext(dispatchers.io) {
         val response = service.getDogBreeds()
         val responseData = requireNotNull(response.body()).message
-        ApiDogBreedMapper.map(responseData)
+        mapper.map(responseData)
+    }
+
+    override suspend fun getDogBreedImages(breedName: String): List<String> = withContext(dispatchers.io) {
+        val response = service.getDogBreedImages(breedName = breedName)
+        requireNotNull(response.body()).message
+    }
+
+    override suspend fun getDogSubBreedImages(breedName: String, subBreedName: String): List<String> = withContext(dispatchers.io) {
+        val response = service.getDogSubBreedImages(breedName = breedName, subBreedName = subBreedName)
+        requireNotNull(response.body()).message
     }
 
 }

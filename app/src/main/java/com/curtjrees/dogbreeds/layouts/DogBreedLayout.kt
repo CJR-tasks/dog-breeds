@@ -94,10 +94,10 @@ private fun PreviewDogBreedLayout() {
     val item = DogBreedItem(
         name = "Test Breed Name",
         subBreeds = listOf(
-            DogSubBreedItem("Sub Breed 1"),
-            DogSubBreedItem("Sub Breed 2"),
-            DogSubBreedItem("Sub Breed 3"),
-            DogSubBreedItem("Sub Breed 4"),
+            DogSubBreedItem("Sub Breed 1", breedName = "Test Breed Name"),
+            DogSubBreedItem("Sub Breed 2", breedName = "Test Breed Name"),
+            DogSubBreedItem("Sub Breed 3", breedName = "Test Breed Name"),
+            DogSubBreedItem("Sub Breed 4", breedName = "Test Breed Name"),
         )
     )
 
