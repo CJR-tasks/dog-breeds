@@ -1,4 +1,4 @@
-package com.curtjrees.dogbreeds.features.breed_detail
+package com.curtjrees.dogbreeds.features.subbreed_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,23 +10,24 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.curtjrees.dogbreeds.R
 import com.curtjrees.dogbreeds.common.ImagesListAdapter
 import com.curtjrees.dogbreeds.databinding.FragmentDogBreedDetailBinding
-import com.curtjrees.dogbreeds.entities.DogBreedItem
+import com.curtjrees.dogbreeds.entities.DogSubBreedItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class DogBreedDetailFragment : Fragment() {
+class DogSubBreedDetailFragment : Fragment() {
 
-    private val viewModel: DogBreedDetailViewModel by viewModels()
+    private val viewModel: DogSubBreedDetailViewModel by viewModels()
     private var _binding: FragmentDogBreedDetailBinding? = null
     private val binding: FragmentDogBreedDetailBinding get() = requireNotNull(_binding)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val item = requireNotNull(requireArguments().getParcelable<DogBreedItem>(ITEM_ARG_KEY))
+        val item = requireNotNull(requireArguments().getParcelable<DogSubBreedItem>(ITEM_ARG_KEY))
         viewModel.loadData(item)
     }
 
@@ -62,15 +63,15 @@ class DogBreedDetailFragment : Fragment() {
             .launchIn(lifecycleScope)
     }
 
-    private fun render(viewState: DogBreedDetailViewModel.ViewState, adapter: ImagesListAdapter) {
-        binding.name.text = viewState.dogBreed?.name?.capitalize()
-        adapter.submitList(viewState.dogBreed?.images.orEmpty())
+    private fun render(viewState: DogSubBreedDetailViewModel.ViewState, adapter: ImagesListAdapter) {
+        binding.name.text = getString(R.string.sub_breed_name_template, viewState.dogSubBreed?.breedName?.capitalize().orEmpty(), viewState.dogSubBreed?.name?.capitalize().orEmpty())
+        adapter.submitList(viewState.dogSubBreed?.images.orEmpty())
     }
 
     companion object {
         private const val ITEM_ARG_KEY = "ITEM_ARG_KEY"
 
-        fun newInstance(breed: DogBreedItem): DogBreedDetailFragment = DogBreedDetailFragment().apply {
+        fun newInstance(breed: DogSubBreedItem): DogSubBreedDetailFragment = DogSubBreedDetailFragment().apply {
             arguments = bundleOf(ITEM_ARG_KEY to breed)
         }
     }

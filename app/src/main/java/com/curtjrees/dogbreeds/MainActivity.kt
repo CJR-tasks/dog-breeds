@@ -10,6 +10,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.curtjrees.dogbreeds.features.breed_detail.DogBreedDetailFragment
 import com.curtjrees.dogbreeds.features.breed_list.DogBreedListFragment
+import com.curtjrees.dogbreeds.features.subbreed_detail.DogSubBreedDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         when (event) {
             is BreedListEvent -> switchFragment(DogBreedListFragment(), addToBackStack = false)
             is BreedDetailEvent -> switchFragment(DogBreedDetailFragment.newInstance(event.breed))
-            is SubBreedDetailEvent -> TODO()
+            is SubBreedDetailEvent -> switchFragment(DogSubBreedDetailFragment.newInstance(event.subBreed))
         }
     }
 
