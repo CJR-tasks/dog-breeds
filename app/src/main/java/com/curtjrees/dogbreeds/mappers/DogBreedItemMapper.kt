@@ -8,18 +8,18 @@ import com.curtjrees.dogbreeds.entities.DogSubBreedItem
 
 object DogBreedItemMapper {
 
-    fun mapList(data: List<DogBreed>): List<DogBreedItem> = data.map(DogBreedItemMapper::map)
+    fun mapBreeds(data: List<DogBreed>): List<DogBreedItem> = data.map(DogBreedItemMapper::mapBreed)
 
-    fun map(data: DogBreed): DogBreedItem = DogBreedItem(
+    fun mapBreed(data: DogBreed): DogBreedItem = DogBreedItem(
         name = data.name,
         subBreeds = mapSubBreeds(data.subBreeds, data.name),
     )
 
     @VisibleForTesting
-    internal fun mapSubBreeds(data: List<SubBreed>, breedName: String): List<DogSubBreedItem> = data.map { map(it, breedName) }
+    internal fun mapSubBreeds(data: List<SubBreed>, breedName: String): List<DogSubBreedItem> = data.map { mapSubBreed(it, breedName) }
 
     @VisibleForTesting
-    internal fun map(data: SubBreed, breedName: String): DogSubBreedItem = DogSubBreedItem(
+    internal fun mapSubBreed(data: SubBreed, breedName: String): DogSubBreedItem = DogSubBreedItem(
         name = data.name,
         breedName = breedName
     )
