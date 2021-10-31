@@ -13,18 +13,18 @@ class DogBreedsRepository(
 
     override suspend fun getDogBreeds(): List<DogBreed> = withContext(dispatchers.io) {
         val response = service.getDogBreeds()
-        val responseData = requireNotNull(response.body()).message
-        mapper.map(responseData)
+        val responseData = response.body()?.message ?: throw NoSuchElementException()
+        mapper.mapBreeds(responseData)
     }
 
     override suspend fun getDogBreedImages(breedName: String): List<String> = withContext(dispatchers.io) {
         val response = service.getDogBreedImages(breedName = breedName)
-        requireNotNull(response.body()).message
+        response.body()?.message ?: throw NoSuchElementException()
     }
 
     override suspend fun getDogSubBreedImages(breedName: String, subBreedName: String): List<String> = withContext(dispatchers.io) {
         val response = service.getDogSubBreedImages(breedName = breedName, subBreedName = subBreedName)
-        requireNotNull(response.body()).message
+        response.body()?.message ?: throw NoSuchElementException()
     }
 
 }
