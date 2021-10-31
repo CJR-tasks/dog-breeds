@@ -29,12 +29,20 @@ class DogBreedListViewModel @Inject constructor(
     val viewState: StateFlow<ViewState> = _viewState
 
     fun loadData() {
-        viewModelScope.launch {
-            val data = dogBreedsDataSource.getDogBreeds()
-            val items = DogBreedItemMapper.mapBreeds(data)
+        viewModelScope.launch(dispatchers.default) {
             withContext(dispatchers.main) {
-                _viewState.update { state ->
-                    state.copy(dogBreeds = items)
+                _viewState.update { state -> state.copy(loading = true) }
+            }
+
+            runCatching {
+                val data = dogBreedsDataSource.getDogBreeds()
+                val items = DogBreedItemMapper.mapBreeds(data)
+                withContext(dispatchers.main) {
+                    _viewState.update { state -> state.copy(dogBreeds = items, error = null, loading = false) }
+                }
+            }.onFailure { error ->
+                withContext(dispatchers.main) {
+                    _viewState.update { state -> state.copy(error = error, loading = false) }
                 }
             }
         }
@@ -49,6 +57,8 @@ class DogBreedListViewModel @Inject constructor(
     }
 
     data class ViewState(
+        val loading: Boolean = false,
+        val error: Throwable? = null,
         val dogBreeds: List<DogBreedItem> = emptyList()
     )
 

@@ -2,4 +2,5 @@
     <string name="app_name">Dog Breeds</string>
 
     <string name="sub_breed_name_template">%s - %s</string>
+    <string name="breed_list_error">Something went wrong, please try again</string>
 </resources>
