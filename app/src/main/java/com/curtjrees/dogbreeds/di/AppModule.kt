@@ -6,6 +6,7 @@ import com.curtjrees.dogbreeds.data.api.ApiDogBreedMapper
 import com.curtjrees.dogbreeds.data.api.DogBreedsRepository
 import com.curtjrees.dogbreeds.data.api.DogBreedsService
 import com.curtjrees.dogbreeds.data.domain.DogBreedsDataSource
+import com.curtjrees.dogbreeds.mappers.DogBreedItemMapper
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -59,5 +60,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideNavigator(coroutineDispatchers: CoroutineDispatchers): Navigator = Navigator(coroutineDispatchers)
+
+    @Singleton
+    @Provides
+    fun provideDogBreedItemMapper(): DogBreedItemMapper = DogBreedItemMapper
+
 
 }

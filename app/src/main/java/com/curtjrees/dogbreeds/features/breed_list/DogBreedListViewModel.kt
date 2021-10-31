@@ -22,7 +22,8 @@ import javax.inject.Inject
 class DogBreedListViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val navigator: Navigator,
-    private val dogBreedsDataSource: DogBreedsDataSource
+    private val dogBreedsDataSource: DogBreedsDataSource,
+    private val mapper: DogBreedItemMapper
 ) : ViewModel() {
 
     private val _viewState: MutableStateFlow<ViewState> = MutableStateFlow(ViewState())
@@ -36,7 +37,7 @@ class DogBreedListViewModel @Inject constructor(
 
             runCatching {
                 val data = dogBreedsDataSource.getDogBreeds()
-                val items = DogBreedItemMapper.mapBreeds(data)
+                val items = mapper.mapBreeds(data)
                 withContext(dispatchers.main) {
                     _viewState.update { state -> state.copy(dogBreeds = items, error = null, loading = false) }
                 }
