@@ -31,7 +31,7 @@ class DogBreedListViewModel @Inject constructor(
     fun loadData() {
         viewModelScope.launch {
             val data = dogBreedsDataSource.getDogBreeds()
-            val items = DogBreedItemMapper.mapList(data)
+            val items = DogBreedItemMapper.mapBreeds(data)
             withContext(dispatchers.main) {
                 _viewState.update { state ->
                     state.copy(dogBreeds = items)
